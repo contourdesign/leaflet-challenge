@@ -1,12 +1,14 @@
+// establish url
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
 
-
+// call function with url to see features
 d3.json(queryUrl, function(data) {
 
   createFeatures(data.features);
   console.log(data.features)
 });
 
+// create features based on properties of interest
 function createFeatures(earthquakeData) {
 
   function onEachFeature(feature, layer) {
@@ -14,11 +16,12 @@ function createFeatures(earthquakeData) {
       "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
   }
 
+// dynamic radius based on magnitude
   function radiusSize(magnitude) {
     return magnitude * 20000;
   }
 
-
+// dynamic color based on magnitude
   function circleColor(magnitude) {
     if (magnitude < 1) {
       return "#ccff33"
@@ -40,7 +43,7 @@ function createFeatures(earthquakeData) {
     }
   }
 
-
+// call geojson
   var earthquakes = L.geoJSON(earthquakeData, {
     pointToLayer: function(earthquakeData, latlng) {
       return L.circle(latlng, {
@@ -56,14 +59,14 @@ function createFeatures(earthquakeData) {
 }
 
 
-
+// create map with layers
 function createMap(earthquakes) {
 
 
-  var outdoorsmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+  var outdoorsmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}.png?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
-    id: "mapbox.outdoors",
+    id: "mapbox-streets-v8",
     accessToken: API_KEY
   });
 
