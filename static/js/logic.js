@@ -148,8 +148,9 @@ function createMap(earthquakes) {
               '<i style="background:' + getColor(mags[i] + 1) + '"></i> ' +
               mags[i] + (mags[i + 1] ? '&ndash;' + mags[i + 1] + '<br>' : '+');
       }
-      
+
       return div;
+      
   };
   
   legend.addTo(myMap);
