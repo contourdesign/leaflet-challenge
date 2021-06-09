@@ -1,4 +1,4 @@
-// establish url
+// establish url for monthly
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
 
 // call function with url to see features
@@ -63,7 +63,7 @@ function createFeatures(earthquakeData) {
 function createMap(earthquakes) {
 
 
-  var outdoorsmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}.png?access_token={accessToken}", {
+  var outdoorsmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
     id: "mapbox-streets-v8",
@@ -84,7 +84,7 @@ function createMap(earthquakes) {
     accessToken: API_KEY
   });
 
-  // Create the faultline layer
+  // faultlines layer variable
   var faultLine = new L.LayerGroup();
   
   // Define a baseMaps object to hold our base layers
@@ -106,21 +106,20 @@ function createMap(earthquakes) {
     center: [
       37.09, -95.71
     ],
-    zoom: 4,
+    zoom: 3,
     layers: [satellitemap, earthquakes, faultLine]
   });
 
-  // Create a layer control
-  // Pass in our baseMaps and overlayMaps
-  // Add the layer control to the map
+  // layer control
+  // Add layer control to map
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
 
-  // Query to retrieve the faultline data
+  // retrieve the faultline data
   var faultlinequery = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json";
   
-  // Create the faultlines and add them to the faultline layer
+  // add to the faultline layer
   d3.json(faultlinequery, function(data) {
     L.geoJSON(data, {
       style: function() {
@@ -129,7 +128,7 @@ function createMap(earthquakes) {
     }).addTo(faultLine)
   })
 
-  // color function to be used when creating the legend
+  // color function for legend
   function getColor(d) {
     return d > 5 ? '#ff3333' :
            d > 4  ? '#ff6633' :
@@ -139,22 +138,19 @@ function createMap(earthquakes) {
                     '#ccff33';
   }
 
-// Add legend to the map
+// Add legend to map
   var legend = L.control({position: 'bottomright'});
-  
   legend.onAdd = function (map) {
   
       var div = L.DomUtil.create('div', 'info legend'),
           mags = [0, 1, 2, 3, 4, 5],
           labels = [];
 
-          
       for (var i = 0; i < mags.length; i++) {
           div.innerHTML +=
               '<i style="background:' + getColor(mags[i] + 1) + '"></i> ' +
               mags[i] + (mags[i + 1] ? '&ndash;' + mags[i + 1] + '<br>' : '+');
       }
-  
       return div;
   };
   
