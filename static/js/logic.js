@@ -90,7 +90,6 @@ function createMap(earthquakes) {
     "Satellite Map": satellitemap,
     "Outdoor Map": outdoorsmap,
     "Greyscale Map": grayscalemap
-    
   };
 
   // Create overlay object to hold our overlay layer
@@ -149,6 +148,7 @@ function createMap(earthquakes) {
               '<i style="background:' + getColor(mags[i] + 1) + '"></i> ' +
               mags[i] + (mags[i + 1] ? '&ndash;' + mags[i + 1] + '<br>' : '+');
       }
+      
       return div;
   };
   
