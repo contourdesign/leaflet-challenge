@@ -54,10 +54,8 @@ function createFeatures(earthquakeData) {
     },
     onEachFeature: onEachFeature
   });
-
   createMap(earthquakes);
 }
-
 
 // create map with layers
 function createMap(earthquakes) {
