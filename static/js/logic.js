@@ -1,5 +1,9 @@
+
+
 // establish url for monthly
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
+
+
 
 // call function with url to see features
 d3.json(queryUrl, function(data) {
@@ -20,6 +24,7 @@ function createFeatures(earthquakeData) {
   function radiusSize(magnitude) {
     return magnitude * 20000;
   }
+
 
 // dynamic color based on magnitude
   function circleColor(magnitude) {
@@ -54,6 +59,8 @@ function createFeatures(earthquakeData) {
     },
     onEachFeature: onEachFeature
   });
+
+
   createMap(earthquakes);
 }
 
@@ -122,7 +129,9 @@ function createMap(earthquakes) {
       style: function() {
         return {color: "red", fillOpacity: 0}
       }
+
     }).addTo(faultLine)
+
   })
 
   // color function for legend
