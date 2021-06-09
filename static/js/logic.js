@@ -136,6 +136,7 @@ function createMap(earthquakes) {
   }
 
 // Add legend to map
+
   var legend = L.control({position: 'bottomright'});
   legend.onAdd = function (map) {
   
@@ -150,7 +151,7 @@ function createMap(earthquakes) {
       }
 
       return div;
-      
+
   };
   
   legend.addTo(myMap);
